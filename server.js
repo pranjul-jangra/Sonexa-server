@@ -8,7 +8,7 @@ import errorHandler from './middleware/errorHandler.js';
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 // Middlewares
 connectDB();
@@ -33,4 +33,4 @@ app.use('/api/admin', adminRouter);
 app.use(errorHandler);
 
 // Listning to port
-app.listen(port, () => { console.log(`Server is running...`); });
+app.listen(PORT, () => { console.log(`Server is running...`); });
