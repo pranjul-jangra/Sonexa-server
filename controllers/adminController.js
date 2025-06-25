@@ -61,7 +61,7 @@ export const register = async (req, res) => {
         const newUser = new adminModel({ username, email, password: hashedPassword, sessions: [hashedRefreshToken], is_account_disabled: false });
         await newUser.save();
 
-        res.cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "Lax", maxAge: 14 * 24 * 60 * 60 * 1000 });
+        res.cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "None", secure: true, maxAge: 14 * 24 * 60 * 60 * 1000 });
         res.status(201).json({ message: "User registered successfully", user: newUser, accessToken });
 
     } catch (error) {
@@ -96,7 +96,7 @@ export const login = async (req, res) => {
         await musicModal.updateMany({ adminId: user._id }, { $set: { stop_fechable: false } });
         await user.save();
 
-        res.cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "Lax", maxAge: 14 * 24 * 60 * 60 * 1000 });
+        res.cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "None", secure: true, maxAge: 14 * 24 * 60 * 60 * 1000 });
         res.status(200).json({ message: 'User logged in successfully', user, accessToken });
 
     } catch (error) {
@@ -206,7 +206,7 @@ export const verifyUser = async (req, res) => {
             { $set: { sessions: updatedSessions } }
         );
 
-        res.cookie('refreshToken', newRefreshToken, { httpOnly: true, sameSite: 'Lax', maxAge: 14 * 24 * 60 * 60 * 1000 });
+        res.cookie('refreshToken', newRefreshToken, { httpOnly: true, sameSite: "None", secure: true, maxAge: 14 * 24 * 60 * 60 * 1000 });
         res.status(200).json({ message: 'Authenticated successfully', newToken: accessToken, newUser: user });
 
     } catch (error) {
@@ -797,7 +797,7 @@ export const updateEmail = async (req, res) => {
         await user.save();
         await emailUpdateModel.deleteOne({ _id: emailToken._id });
 
-        res.cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "Lax", maxAge: 14 * 24 * 60 * 60 * 1000 });
+        res.cookie("refreshToken", refreshToken, { httpOnly: true, sameSite: "None", secure: true, maxAge: 14 * 24 * 60 * 60 * 1000 });
         res.status(200).json({ message: 'Email updated successfully', user, accessToken });
 
     } catch (err) {
